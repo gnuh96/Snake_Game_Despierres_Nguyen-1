@@ -75,8 +75,8 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
                 }    
 
                 if(plat.largeur>19||plat.hauteur>19){
-                   if(i==espaceHauteur+1||i==espaceHauteur+2||i==plat.hauteur-espaceHauteur-3||i==plat.hauteur-espaceHauteur-2){
-                       if((j==espaceLargeur+1||j==espaceLargeur+2||j==plat.largeur-espaceLargeur-3||j==plat.largeur-espaceLargeur-2)){
+                   if(i==espaceHauteur||i==espaceHauteur+1||i==plat.hauteur-espaceHauteur-2||i==plat.hauteur-espaceHauteur-1){
+                       if((j==espaceLargeur||j==espaceLargeur+1||j==plat.largeur-espaceLargeur-2||j==plat.largeur-espaceLargeur-1)){
                            plat.map[i][j]='X';
                        }
                        else

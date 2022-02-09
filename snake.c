@@ -4,5 +4,6 @@
 
 typedef struct Snake{
     int taille;
-    Point *listePoint; //liste des cellules ou le Snake occupe
+    Point *body; //liste des cellules ou le Snake occupe
 }Snake;
+

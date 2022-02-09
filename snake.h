@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <point.c>
+#include <point.h>
 
 typedef struct Snake{
     int taille;

@@ -34,8 +34,8 @@ int main(int argc, char *argv[]){
     printf("Niveau de depart :%d\n", niveau);
     printf("Nombre de snakes: %d\n", nb_snake);
     
-   Plateau plat=initPlateau(hauteur,largeur,niveau);
-   affichePlateau(plat);
+    Plateau plat=initPlateau(hauteur,largeur,niveau);
+    affichePlateau(plat);
     exit(EXIT_SUCCESS);
 }
 

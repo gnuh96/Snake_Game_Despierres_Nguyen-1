@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include "plateau.h"
+#include "snake.h"
 
 int main(int argc, char *argv[]){
 
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]){
     
     Plateau plat=initPlateau(hauteur,largeur,niveau);
     affichePlateau(plat);
+
     exit(EXIT_SUCCESS);
 }
 

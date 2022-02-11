@@ -13,15 +13,16 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
     plat.hauteur=hauteur;
     plat.largeur=largeur;
     plat.niveau=niveau;
-    plat.map=(char**)malloc(hauteur*sizeof(char*));
+   
+    plat.map = (char **)malloc(sizeof(char*) * hauteur);
+        for (int i = 0; i < hauteur; i++)
+        {
+            plat.map[i] = (char *)malloc(sizeof(char) * largeur);
+        }
 
     int espaceLargeur, espaceHauteur;
     espaceHauteur=hauteur/10;
     espaceLargeur=largeur/10;
-
-    for(int i=0;i<largeur;i++){
-        plat.map[i]=(char*)malloc(hauteur*sizeof(char*));
-    }
 
     switch (niveau){
     case 1:

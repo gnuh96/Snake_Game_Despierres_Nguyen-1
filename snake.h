@@ -38,3 +38,11 @@ void updateScore(char fruit, int *score){
         break;
     }
 }
+
+int max(int n, int m) {
+    if (n>m){
+        return n;
+    }
+    else
+        return m;
+}

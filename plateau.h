@@ -107,3 +107,7 @@ void affichePlateau(Plateau plat){
         }
     }
 }
+
+char getChar(Plateau plat, int x, int y){
+    return(plat.map[x][y]);
+}

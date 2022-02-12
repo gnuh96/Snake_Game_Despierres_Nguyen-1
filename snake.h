@@ -51,3 +51,11 @@ void updateScore(char fruit, int *score){
 void afficheScore(Snake s){
     printf("Snake %c : %d\n", s.id, s.score);
 }
+
+Point deplaceSnake(int hauteur, int largeur){
+    int x, y;
+    x=rand()% largeur;
+    y=rand()% hauteur;
+    Point p={x,y};
+    return p;
+}

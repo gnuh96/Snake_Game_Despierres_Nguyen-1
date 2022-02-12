@@ -3,7 +3,7 @@
 #include "point.h"
 
 typedef struct Snake{
-    int id;
+    char id;
     int taille;
     Point *body; //liste des cellules ou le Snake occupe
     int score; //score du snake
@@ -11,12 +11,21 @@ typedef struct Snake{
 
 Snake initSnake(int i){
     Snake s;
-    s.id = i;
+    s.id =  i+'0';
     s.taille = 1;
     s.body=(Point*)malloc(s.taille*sizeof(Point));
     Point p = {1, i+1};
     s.body[0]= p;
     s.score=0;
+    return s;
+}
+
+int max(int n, int m) {
+    if (n>m){
+        return n;
+    }
+    else
+        return m;
 }
 
 void updateScore(char fruit, int *score){
@@ -39,10 +48,6 @@ void updateScore(char fruit, int *score){
     }
 }
 
-int max(int n, int m) {
-    if (n>m){
-        return n;
-    }
-    else
-        return m;
+void afficheScore(Snake s){
+    printf("Snake %c : %d\n", s.id, s.score);
 }

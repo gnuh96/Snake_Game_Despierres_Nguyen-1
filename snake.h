@@ -43,6 +43,8 @@ void updateScore(char fruit, int *score){
     case 'P': //Pomme
         *score+=1;
         break;
+    case 'X':
+        *score-=15;
     default:
         break;
     }

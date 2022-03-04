@@ -4,8 +4,11 @@
 #include <time.h>
 #include "plateau.h"
 #include "snake.h"
+#include <pthread.h>
 
 #define SCORE = 99
+
+pthread_mutex_t mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
 
 Plateau plat = initPlateau(25,25,1);
 
@@ -15,6 +18,9 @@ void *fun_snake(void *p){
     while (s.score < SCORE)
     {
         deplaceSnake(plat,s,plat.hauteur,plat.largeur);
+        pthread_mutex_lock(&mutex_plateau);
+        print_snake_on_plat(s, plat);
+        pthread_mutex_unlock(&mutex_plateau);
     }
     
 }

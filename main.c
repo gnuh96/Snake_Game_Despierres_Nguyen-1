@@ -5,6 +5,14 @@
 #include "plateau.h"
 #include "snake.h"
 
+void *fun_snake(void *p){
+
+}
+
+void *fun_plateau(void *p) {
+
+}
+
 int main(int argc, char *argv[]){
 
     int opt, niveau, hauteur, largeur, nb_snake;
@@ -39,7 +47,22 @@ int main(int argc, char *argv[]){
     printf("Niveau de depart :%d\n", niveau);
     printf("Nombre de snakes: %d\n", nb_snake);
     
+    
     Plateau plat=initPlateau(hauteur,largeur,niveau);
+
+    pthread_t snake_thread[nb_snake];
+    pthread_t plateau_thread;
+
+    for (int i = 0; i < nb_snake; i++)
+    {
+        pthread_create(&snake_thread[i],NULL,fun_snake,NULL);
+    }
+    pthread_create(&plateau_thread,NULL,fun_plateau,NULL);
+    for (int i = 0; i < nb_snake; i++)
+    {
+        pthread_join(&snake_thread[i],NULL);
+    }
+    pthread_join(&plateau_thread, NULL);
     affichePlateau(plat);
 
     exit(EXIT_SUCCESS);

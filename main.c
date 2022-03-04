@@ -7,17 +7,20 @@
 
 #define SCORE = 99
 
-void *fun_snake(void *p){
-    
-    while (/* condition */)
+Plateau plat = initPlateau(25,25,1);
+
+void *fun_snake(void *p){   
+    Snake s = (Snake *)malloc(sizeof(Snake));
+    initSnake(s,p, plat)
+    while (s.score < SCORE)
     {
-        /* code */
+        deplaceSnake(plat,s,plat.hauteur,plat.largeur);
     }
     
 }
 
 void *fun_plateau(void *p) {
-
+    affichePlateau(plat);
 }
 
 int main(int argc, char *argv[]){
@@ -54,15 +57,14 @@ int main(int argc, char *argv[]){
     printf("Niveau de depart :%d\n", niveau);
     printf("Nombre de snakes: %d\n", nb_snake);
     
-    
-    Plateau plat=initPlateau(hauteur,largeur,niveau);
+    plat=initPlateau(hauteur,largeur,niveau);
 
     pthread_t snake_thread[nb_snake];
     pthread_t plateau_thread;
 
     for (int i = 0; i < nb_snake; i++)
     {
-        pthread_create(&snake_thread[i],NULL,fun_snake,NULL);
+        pthread_create(&snake_thread[i],NULL,fun_snake,(void*)i);
     }
     pthread_create(&plateau_thread,NULL,fun_plateau,NULL);
     for (int i = 0; i < nb_snake; i++)
@@ -70,7 +72,6 @@ int main(int argc, char *argv[]){
         pthread_join(&snake_thread[i],NULL);
     }
     pthread_join(&plateau_thread, NULL);
-    affichePlateau(plat);
 
     exit(EXIT_SUCCESS);
 }

@@ -5,8 +5,15 @@
 #include "plateau.h"
 #include "snake.h"
 
-void *fun_snake(void *p){
+#define SCORE = 99
 
+void *fun_snake(void *p){
+    
+    while (/* condition */)
+    {
+        /* code */
+    }
+    
 }
 
 void *fun_plateau(void *p) {

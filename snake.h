@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "point.h"
-#include "plateau.h"
 
 typedef struct Snake{
     char id;
@@ -10,19 +9,19 @@ typedef struct Snake{
     int score; //score du snake
 }Snake;
 
-void initSnake(Snake *s, int i, Plateau *plateau){
+void initSnake(Snake *s, int i){
     s->id =  i+'0';
     s->taille = 1;
     s->body=(Point*)malloc(s->taille*sizeof(Point));
     Point p = {1, i+1};
     s->body[0]= p;
     s->score=0;
-    print_snake_on_plat(s, plateau);
+    
 }
 
-void print_snake_on_plat(Snake s, Plateau plat) {
-    for (int i = 0, i < s->taille, i++) {
-        plat->map[s.body[i].x][s.body[i].y] = s.id;
+void print_snake_on_plat(Snake* s, Plateau* plat) {
+    for (int i = 0; i < s->taille; i++) {
+        plat->map[s->body[i].x][s->body[i].y] = s->id;
     }
 }
 
@@ -90,5 +89,4 @@ void deplaceSnake(Plateau plat, Snake *s, int hauteur, int largeur){
             pointTmp1=pointTmp2; //pointTmp1 prend la position en memoire dans pointTmp2
         }
     }
-    print_snake_on_plat(s, plat);
 }

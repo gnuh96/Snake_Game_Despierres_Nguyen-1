@@ -4,29 +4,28 @@
 #include <time.h>
 #include "plateau.h"
 #include "snake.h"
-#include <pthread.h>
-
-#define SCORE = 99
+#include "pthread.h"
+#include "unistd.h"
 
 pthread_mutex_t mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
+Plateau plat;
+int SCORE=0;
 
-Plateau plat = initPlateau(25,25,1);
-
-void *fun_snake(void *p){   
-    Snake s = (Snake *)malloc(sizeof(Snake));
-    initSnake(s,p, plat)
-    while (s.score < SCORE)
+void *fun_snake(void *arg){   
+    Snake *s;
+    unsigned int id=(uintptr_t) arg;
+    initSnake(s, id);
+    while (s->score < SCORE)
     {
-        deplaceSnake(plat,s,plat.hauteur,plat.largeur);
+        deplaceSnake(plat,s, plat.hauteur, plat.largeur);
         pthread_mutex_lock(&mutex_plateau);
-        print_snake_on_plat(s, plat);
+        print_snake_on_plat(s, &plat);
         pthread_mutex_unlock(&mutex_plateau);
     }
-    
 }
 
 void *fun_plateau(void *p) {
-    affichePlateau(plat);
+    affichePlateau(*((Plateau*)p));
 }
 
 int main(int argc, char *argv[]){
@@ -39,6 +38,9 @@ int main(int argc, char *argv[]){
     
     //Initialisation random
     srand(time(NULL));
+
+    //Initialisation score
+    SCORE=rand()%(99-50+1)+50;
 
     //Lecture des arguments
     while ((opt = getopt(argc, argv, ":if:n:m:l:")) != -1) {
@@ -63,23 +65,25 @@ int main(int argc, char *argv[]){
     printf("Niveau de depart :%d\n", niveau);
     printf("Nombre de snakes: %d\n", nb_snake);
     
-    plat=initPlateau(hauteur,largeur,niveau);
+    Plateau plat=initPlateau(hauteur,largeur,niveau);
+    affichePlateau(plat);
 
     pthread_t snake_thread[nb_snake];
     pthread_t plateau_thread;
 
-    for (int i = 0; i < nb_snake; i++)
-    {
-        pthread_create(&snake_thread[i],NULL,fun_snake,(void*)i);
+    for (int i = 0; i < nb_snake; i++){
+        pthread_create(&snake_thread[i],NULL,fun_snake,(void *) (i));
     }
+   
     pthread_create(&plateau_thread,NULL,fun_plateau,NULL);
-    for (int i = 0; i < nb_snake; i++)
-    {
-        pthread_join(&snake_thread[i],NULL);
+    
+    for (int i = 0; i < nb_snake; i++){
+        pthread_join(snake_thread[i],NULL);
     }
-    pthread_join(&plateau_thread, NULL);
+    
+    pthread_join(plateau_thread, NULL);
+    affichePlateau(plat);
 
     exit(EXIT_SUCCESS);
 }
-
 

@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "pthread.h"
 
 typedef struct Plateau{
     int hauteur;
     int largeur;
     int niveau;
     char **map;
+    pthread_mutex_t mutex_plateau;
 }Plateau;
 
 void updateFruit(Plateau *plat){
@@ -47,6 +49,8 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
     plat.largeur=largeur;
     plat.niveau=niveau;
    
+   plat.mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
+
     plat.map = (char **)malloc(sizeof(char*) * hauteur);
         for (int i = 0; i < hauteur; i++)
         {
@@ -144,6 +148,6 @@ void affichePlateau(Plateau plat){
     }
 }
 
-char getChar(Plateau plat, int x, int y){
-    return(plat.map[x][y]);
+char getChar(Plateau *plat, int x, int y){
+    return(plat->map[x][y]);
 }

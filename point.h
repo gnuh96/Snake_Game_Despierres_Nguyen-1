@@ -15,6 +15,13 @@ void affiche(Point *p) {
     printf("( %d , %d)\n", p->x, p->y);
 }
 
+Point initPoint(int largeur, int hauteur){
+    Point p;
+    p.x=rand()%(largeur+1);
+    p.y=rand()%(hauteur+1);
+
+    return p;
+}
 // int main () {
 //     Point p1 = {1,2};
 //     affiche(&p1);

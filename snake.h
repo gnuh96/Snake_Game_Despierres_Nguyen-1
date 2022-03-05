@@ -9,19 +9,24 @@ typedef struct Snake{
     int score; //score du snake
 }Snake;
 
-void initSnake(Snake *s, int i){
-    s->id =  i+'0';
-    s->taille = 1;
-    s->body=(Point*)malloc(s->taille*sizeof(Point));
-    Point p = {1, i+1};
-    s->body[0]= p;
-    s->score=0;
-    
-}
 
 void print_snake_on_plat(Snake* s, Plateau* plat) {
     for (int i = 0; i < s->taille; i++) {
         plat->map[s->body[i].x][s->body[i].y] = s->id;
+    }
+}
+
+void initSnake(Snake *s, int i, Plateau *plat){
+    s->id =  i+'0';
+    s->taille = 1;
+    s->body=(Point*)malloc(s->taille*sizeof(Point));
+    Point p = initPoint(plat->largeur, plat->hauteur);
+    s->body[0]= p;
+    s->score=0;
+
+        //Affichage du snake sur le plateau
+    for(int i=0;i<s->taille;i++){
+        plat->map[s->body[i].x][s->body[i].y]=s->id;
     }
 }
 
@@ -68,7 +73,7 @@ Point deplaceTete(int hauteur, int largeur){
 }
 
 //A tester
-void deplaceSnake(Plateau plat, Snake *s, int hauteur, int largeur){
+void deplaceSnake(Plateau *plat, Snake *s, int hauteur, int largeur){
     //Deplacement de la tete
     Point tete=deplaceTete(hauteur, largeur);
     
@@ -82,7 +87,7 @@ void deplaceSnake(Plateau plat, Snake *s, int hauteur, int largeur){
 
     //Ajout d'un nouveau fruit
     if(fruit!='.'){
-        updateFruit(&plat);
+        updateFruit(plat);
     }
 
     //Deplacement du reste du corps
@@ -93,5 +98,10 @@ void deplaceSnake(Plateau plat, Snake *s, int hauteur, int largeur){
             deplace(&s->body[i], pointTmp1.x, pointTmp1.y); //s.body[i] prend la position du point precedent
             pointTmp1=pointTmp2; //pointTmp1 prend la position en memoire dans pointTmp2
         }
+    }
+
+    //Affichage du snake sur le plateau
+    for(int i=0;i<s->taille;i++){
+        plat->map[s->body[i].x][s->body[i].y]=s->id;
     }
 }

@@ -13,18 +13,18 @@ int SCORE=0;
 int GAGNANT=(-1);
 
 void *fun_snake(void *arg){   
-    Snake *s;
+    Snake s;
     unsigned int id=(uintptr_t) arg;
     initSnake(s, id, &plat);
-    while ((s->score != SCORE)||(GAGNANT!=-1)){
+    while ((s.score != SCORE)||(GAGNANT!=-1)){
         pthread_mutex_lock(&plat.mutex_plateau);
-        deplaceSnake(&plat,s, plat.hauteur, plat.largeur);
-        print_snake_on_plat(s, &plat);
+        deplaceSnake(&plat,&s, plat.hauteur, plat.largeur);
+        print_snake_on_plat(&s, &plat);
         pthread_mutex_unlock(&plat.mutex_plateau);
         
     }
-    if (s->score==SCORE){
-        GAGNANT=s->id;
+    if (s.score==SCORE){
+        GAGNANT=s.id;
     }
     
     return NULL;

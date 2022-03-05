@@ -16,17 +16,21 @@ void print_snake_on_plat(Snake* s, Plateau* plat) {
     }
 }
 
-void initSnake(Snake *s, int i, Plateau *plat){
-    s->id =  i+'0';
-    s->taille = 1;
-    s->body=(Point*)malloc(s->taille*sizeof(Point));
+void initSnake(Snake s, int i, Plateau *plat){
+    printf("\nInitialisation Snake\n");
+    s.id =  i+'0';
+    printf("\nid\n");
+    s.taille = 1;
+    printf("\nTaille\n");
+    s.body=(Point*)malloc(s.taille*sizeof(Point));
     Point p = initPoint(plat->largeur, plat->hauteur);
-    s->body[0]= p;
-    s->score=0;
-
+    s.body[0]= p;
+    s.score=0;
+    printf("\nInitialisation Snake 2\n");
         //Affichage du snake sur le plateau
-    for(int i=0;i<s->taille;i++){
-        plat->map[s->body[i].x][s->body[i].y]=s->id;
+    for(int i=0;i<s.taille;i++){
+        plat->map[s.body[i].x][s.body[i].y]=s.id;
+        printf("ID : %d",s.id);
     }
 }
 

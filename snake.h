@@ -81,17 +81,20 @@ void deplaceSnake(Plateau *plat, Snake *s, int hauteur, int largeur){
     //Deplacement de la tete
     Point tete=deplaceTete(hauteur, largeur);
     
+    //Recuperation du fruit
+    char fruit=getChar(plat, tete.x, tete.y);
+    updateScore(fruit, &s->score);
+    //Booleen pour verifier l'ajout d'un point au snake
+    int ajout=0;
+
     Point pointTmp1, pointTmp2;
     pointTmp1=s->body[0]; //pointTmp1 prend la position actuelle de la tete
     deplace(&s->body[0],tete.x,tete.y);
 
-    //Recuperation du fruit
-    char fruit=getChar(plat, tete.x, tete.y);
-    updateScore(fruit, &s->score);
-
     //Ajout d'un nouveau fruit
     if(fruit!='.'){
         updateFruit(plat);
+        ajout=1;
     }
 
     //Deplacement du reste du corps
@@ -102,6 +105,12 @@ void deplaceSnake(Plateau *plat, Snake *s, int hauteur, int largeur){
             deplace(&s->body[i], pointTmp1.x, pointTmp1.y); //s.body[i] prend la position du point precedent
             pointTmp1=pointTmp2; //pointTmp1 prend la position en memoire dans pointTmp2
         }
+    }
+
+    //Verification que le snake est sous la taille max
+    if(s->taille<max(plat->hauteur, plat->largeur)){
+        //Ajout d'un point
+        s->body[s->taille]=initPoint(pointTmp1.x, pointTmp1.y);
     }
 
     //Affichage du snake sur le plateau

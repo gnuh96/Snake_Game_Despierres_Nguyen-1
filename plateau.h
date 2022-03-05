@@ -8,6 +8,39 @@ typedef struct Plateau{
     char **map;
 }Plateau;
 
+void updateFruit(Plateau *plat){
+    //Initialisation des coordonnees de la case
+    int x=rand()%(plat->largeur+1);
+    int y=rand()%(plat->hauteur+1);
+
+    //Initialisation du fruit
+    int choixFruit=rand()%4;
+    char fruit_type;
+    switch (choixFruit){
+    case 0: //Fraise
+        fruit_type='F';
+        break;
+
+    case 1: //Cerise
+        fruit_type='C';
+        break;
+
+    case 2: //Banane
+        fruit_type='B';
+        break;
+    
+    case 3: //Pomme
+        fruit_type='P';
+        break;
+
+    default:
+        break;
+    }
+
+    //Ajout du fruit sur le plateau
+    plat->map[x][y]=fruit_type;
+}
+
 Plateau initPlateau(int hauteur, int largeur, int niveau){
     Plateau plat;
     plat.hauteur=hauteur;
@@ -94,6 +127,8 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
         }
         break;
     }
+
+    updateFruit(&plat);
 
     return plat;
 }

@@ -80,6 +80,11 @@ void deplaceSnake(Plateau plat, Snake *s, int hauteur, int largeur){
     char fruit=getChar(plat, tete.x, tete.y);
     updateScore(fruit, &s->score);
 
+    //Ajout d'un nouveau fruit
+    if(fruit!='.'){
+        updateFruit(&plat);
+    }
+
     //Deplacement du reste du corps
     if (s->taille>1)
     {

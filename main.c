@@ -10,22 +10,28 @@
 pthread_mutex_t mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
 Plateau plat;
 int SCORE=0;
+int GAGNANT=-1;
 
 void *fun_snake(void *arg){   
     Snake *s;
     unsigned int id=(uintptr_t) arg;
     initSnake(s, id);
-    while (s->score < SCORE)
+    while (s->score != SCORE)
     {
         deplaceSnake(plat,s, plat.hauteur, plat.largeur);
         pthread_mutex_lock(&mutex_plateau);
         print_snake_on_plat(s, &plat);
         pthread_mutex_unlock(&mutex_plateau);
     }
+    return NULL;
 }
 
 void *fun_plateau(void *p) {
-    affichePlateau(*((Plateau*)p));
+    while (GAGNANT==-1)
+    {
+        affichePlateau(*((Plateau*)p));
+    }
+    return NULL;
 }
 
 int main(int argc, char *argv[]){
@@ -73,17 +79,16 @@ int main(int argc, char *argv[]){
 
     for (int i = 0; i < nb_snake; i++){
         pthread_create(&snake_thread[i],NULL,fun_snake,(void *) (i));
-    }
-   
-    pthread_create(&plateau_thread,NULL,fun_plateau,NULL);
-    
-    for (int i = 0; i < nb_snake; i++){
         pthread_join(snake_thread[i],NULL);
     }
+   
+    pthread_create(&plateau_thread,NULL,fun_plateau,(void *) &plat);
     
     pthread_join(plateau_thread, NULL);
-    affichePlateau(plat);
 
+//    affichePlateau(plat);
+    pthread_exit(NULL);
+    
     exit(EXIT_SUCCESS);
 }
 

@@ -16,19 +16,21 @@ void *fun_snake(void *arg){
     Snake *s;
     unsigned int id=(uintptr_t) arg;
     initSnake(s, id);
-    while (s->score != SCORE)
-    {
+    while ((s->score != SCORE)||(GAGNANT!=-1)){
         deplaceSnake(plat,s, plat.hauteur, plat.largeur);
         pthread_mutex_lock(&mutex_plateau);
         print_snake_on_plat(s, &plat);
         pthread_mutex_unlock(&mutex_plateau);
     }
+    if (s->score==SCORE){
+        GAGNANT=s->id;
+    }
+    
     return NULL;
 }
 
 void *fun_plateau(void *p) {
-    while (GAGNANT==-1)
-    {
+    while (GAGNANT==-1){
         affichePlateau(*((Plateau*)p));
     }
     return NULL;
@@ -88,7 +90,7 @@ int main(int argc, char *argv[]){
 
 //    affichePlateau(plat);
     pthread_exit(NULL);
-    
+
     exit(EXIT_SUCCESS);
 }
 

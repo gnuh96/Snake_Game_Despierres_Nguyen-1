@@ -7,6 +7,7 @@
 #include "pthread.h"
 #include "unistd.h"
 
+pthread_mutex_t mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
 
 Plateau plat;
 int SCORE=0;
@@ -17,11 +18,11 @@ void *fun_snake(void *arg){
     unsigned int id=(uintptr_t) arg;
     initSnake(s, id, &plat);
     while ((s.score != SCORE)||(GAGNANT!=-1)){
-        pthread_mutex_lock(&plat.mutex_plateau);
+        pthread_mutex_lock(&mutex_plateau);
         deplaceSnake(&plat,&s, plat.hauteur, plat.largeur);
         print_snake_on_plat(&s, &plat);
-        pthread_mutex_unlock(&plat.mutex_plateau);
-        
+        pthread_mutex_unlock(&mutex_plateau);
+        sleep(1);
     }
     if (s.score==SCORE){
         GAGNANT=s.id;
@@ -33,7 +34,7 @@ void *fun_snake(void *arg){
 void *fun_plateau(void *p) {
     while (GAGNANT==-1){
         affichePlateau(*((Plateau*)p));
-        sleep(10);
+        sleep(1);
     }
     return NULL;
 }

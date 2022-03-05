@@ -7,7 +7,6 @@ typedef struct Plateau{
     int largeur;
     int niveau;
     char **map;
-    pthread_mutex_t mutex_plateau;
 }Plateau;
 
 void updateFruit(Plateau *plat){
@@ -49,7 +48,6 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
     plat.largeur=largeur;
     plat.niveau=niveau;
    
-   plat.mutex_plateau = PTHREAD_MUTEX_INITIALIZER;
 
     plat.map = (char **)malloc(sizeof(char*) * hauteur);
         for (int i = 0; i < hauteur; i++)

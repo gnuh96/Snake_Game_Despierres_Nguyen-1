@@ -134,6 +134,7 @@ Plateau initPlateau(int hauteur, int largeur, int niveau){
 }
 
 void affichePlateau(Plateau plat){
+    printf("\n");
     for(int i=0;i<plat.hauteur;i++){
         for(int j=0;j<plat.largeur;j++){
             printf("%c",plat.map[i][j]);
